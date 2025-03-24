@@ -15,7 +15,7 @@ const render = Render.create({
     element: document.body,
     options: {
         wireframes: false,
-        background: '#F7F4C8',
+        background: '#ECF2DF',
         width: 620,
         height: 850,
     }
@@ -27,19 +27,19 @@ const world = engine.world;
 // 벽 생성
 const leftWall = Bodies.rectangle(15, 395, 30, 790,{
     isStatic: true,
-    render: { fillStyle: '#E6B143'}
+    render: { fillStyle: '#81A687'}
 })
 const rightWall = Bodies.rectangle(605, 395, 30, 790,{
     isStatic: true,
-    render: { fillStyle: '#E6B143'}
+    render: { fillStyle: '#81A687'}
 })
 const ground = Bodies.rectangle(310, 820, 620, 60,{
     isStatic: true,
-    render: { fillStyle: '#E6B143'}
+    render: { fillStyle: '#81A687'}
 })
 const topLine = Bodies.rectangle(310, 150, 620, 2,{
     isStatic: true,
-    render: { fillStyle: '#E6B143'}
+    render: { fillStyle: '#3C593B'}
 })
 
 //생성한 벽 월드에 배치
