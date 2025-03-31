@@ -1,3 +1,7 @@
+// 이미지 및 반지름 추가
+import { FRUITS } from "./fruits";
+
+
 // 모듈 불러오기
 
 var Engine = Matter.Engine,
