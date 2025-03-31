@@ -52,3 +52,20 @@ World.add(world, [leftWall, rightWall, ground, topLine]);
 // 실행
 Render.run(render);
 Runner.run(engine);
+
+//과일 추가 함수
+function addFruits() {
+
+    const fruit = FRUITS[0];
+    const body = Bodies.circle(300, 50, fruit.radius, 
+        {
+            render: {
+                sprite: {texture: `${fruit.name}.png`}
+            }
+        });
+        //월드에 배치
+        World.add(world, body);
+
+}
+//함수 호출
+addFruits();
