@@ -34,7 +34,7 @@ const rightWall = Bodies.rectangle(605, 395, 30, 790,{
     render: { fillStyle: '#81A687'}
 })
 const ground = Bodies.rectangle(310, 820, 620, 60,{
-    isStatic: true,
+    isStatic: false,
     render: { fillStyle: '#81A687'}
 })
 const topLine = Bodies.rectangle(310, 150, 620, 2,{
