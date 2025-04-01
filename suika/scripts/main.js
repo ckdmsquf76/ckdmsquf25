@@ -8,7 +8,8 @@ var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
     Bodies = Matter.Bodies,
-    World = Matter.World;
+    World = Matter.World, 
+    Body = Matter.Body; //바디 추가 
 
 // 엔진 선언
 const engine = Engine.create();
@@ -87,5 +88,26 @@ function addFruits()
         World.add(world, body);
 
 }
+
+//키보드 입력 받기
+window.onkeydown = (event) => 
+{
+    switch(event.code) 
+    {
+        case "KeyA":
+            Body.setPosition(currentbody, {
+                x: currentbody.position.x -10,
+                y: currentbody.position.y ,
+            })
+            break;
+
+        case "KeyD":
+            Body.setPosition(currentbody, {
+                x: currentbody.position.x +10,
+                y: currentbody.position.y,
+            })    
+    }
+}
+
 //함수 호출
 addFruits();
