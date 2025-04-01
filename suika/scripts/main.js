@@ -60,6 +60,9 @@ Runner.run(engine);
 let currentbody = null;
 let currentfruit = null;
 
+//키 조작 제어 변수
+let disableAction = false;
+
 //과일 추가 함수
 function addFruits() 
 {
@@ -92,6 +95,8 @@ function addFruits()
 //키보드 입력 받기
 window.onkeydown = (event) => 
 {
+    if(disableAction)
+        return;
     switch(event.code) 
     {
         case "KeyA":
@@ -109,6 +114,13 @@ window.onkeydown = (event) =>
             break;
         case "Space":
             currentbody.isSleeping = false;  
+            // addFruit()
+            disableAction = true;
+            //지연 시키는 함수
+            setTimeout(()=> {
+                addFruits();
+                disableAction = false;
+            }, 1000);
             break;         
     }
 }
