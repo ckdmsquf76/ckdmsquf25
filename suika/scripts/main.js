@@ -106,6 +106,10 @@ window.onkeydown = (event) =>
                 x: currentbody.position.x +10,
                 y: currentbody.position.y,
             })    
+            break;
+        case "Space":
+            currentbody.isSleeping = false;  
+            break;         
     }
 }
 
