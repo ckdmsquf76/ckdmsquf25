@@ -22,7 +22,7 @@ const render = Render.create({
     options: {
         wireframes: false,
         background: '#ECF2DF',
-        width: 620,
+        width: 520,
         height: 850,
     }
 });
@@ -35,7 +35,7 @@ const leftWall = Bodies.rectangle(15, 395, 30, 790,{
     isStatic: true,
     render: { fillStyle: '#81A687'}
 })
-const rightWall = Bodies.rectangle(605, 395, 30, 790,{
+const rightWall = Bodies.rectangle(505, 395, 30, 790,{
     isStatic: true,
     render: { fillStyle: '#81A687'}
 })
@@ -72,7 +72,7 @@ function addFruits()
 
     const fruit = FRUITS[index];
 
-    const body = Bodies.circle(300, 50, fruit.radius, 
+    const body = Bodies.circle(250, 50, fruit.radius, 
         {
             // 해당 과일의 번호값를 저장
             index : index,
@@ -137,7 +137,7 @@ Events.on(engine, "collisionStart", (event) => {
 
             // 수박일 경우에 처리하지 않음
             if ( index == FRUITS.length - 1)
-                return;x
+                return;
 
             World.remove(world, [collision.bodyA, collision.bodyB]);
             
