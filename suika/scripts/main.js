@@ -132,7 +132,27 @@ Events.on(engine, "collisionStart", (event) => {
         //같은 과일일 경우
         if( collision.bodyA.index == collision.bodyB.index )
         {
-            World.remove(world, [collision.bodyA, collision.bodyB])
+            //지우기 전 해당 과일 값을 저장.
+            const index = collision.bodyA.index;
+
+            World.remove(world, [collision.bodyA, collision.bodyB]);
+            
+            //다음 단계 과일 생성
+            const newFruit = FRUITS[index +1];
+            const newBody = Bodies.circle(
+                collision.collision.supports[0].x, 
+                collision.collision.supports[0].y,
+                newFruit.radius,{
+                    //과일 값 1 증가
+                    index : index + 1,
+                    //새로운 과일 렌더
+                    render: { sprite: {texture: `${newFruit.name}.png`} },
+                }
+            );
+            
+            //새로 만든 과일 추가
+            World.add(world, newBody);
+        
         }
     })
 })
