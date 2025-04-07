@@ -9,7 +9,8 @@ var Engine = Matter.Engine,
     Runner = Matter.Runner,
     Bodies = Matter.Bodies,
     World = Matter.World, 
-    Body = Matter.Body; //바디 추가 
+    Body = Matter.Body, //바디 추가 
+    Events = Matter.Events; // Events 추가
 
 // 엔진 선언
 const engine = Engine.create();
@@ -124,6 +125,17 @@ window.onkeydown = (event) =>
             break;         
     }
 }
+
+Events.on(engine, "collisionStart", (event) => {
+
+    event.pairs.forEach((collision) => {
+        //같은 과일일 경우
+        if( collision.bodyA.index == collision.bodyB.index )
+        {
+            World.remove(world, [collision.bodyA, collision.bodyB])
+        }
+    })
+})
 
 //함수 호출
 addFruits();
