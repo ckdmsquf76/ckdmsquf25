@@ -135,6 +135,10 @@ Events.on(engine, "collisionStart", (event) => {
             //지우기 전 해당 과일 값을 저장.
             const index = collision.bodyA.index;
 
+            // 수박일 경우에 처리하지 않음
+            if ( index == FRUITS.length - 1)
+                return;x
+
             World.remove(world, [collision.bodyA, collision.bodyB]);
             
             //다음 단계 과일 생성
