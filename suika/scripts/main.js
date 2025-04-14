@@ -44,6 +44,9 @@ const ground = Bodies.rectangle(310, 820, 620, 60,{
     render: { fillStyle: '#81A687'}
 })
 const topLine = Bodies.rectangle(310, 150, 620, 2,{
+
+    //이벤트 처리 이름 지정
+    name : "topLine",
     isStatic: true,
     //센서 감지 기능 충돌 안함
     isSensor: true,
@@ -58,8 +61,8 @@ Render.run(render);
 Runner.run(engine);
 
 //현재 과일 값을 저장하는 변수
-let currentbody = null;
-let currentfruit = null;
+let currentBody = null;
+let currentFruit = null;
 
 //키 조작 제어 변수
 let disableAction = false;
@@ -85,8 +88,8 @@ function addFruits()
         });
 
         //현재 과일 값 저장
-        currentbody = body;
-        currentfruit = fruit;
+        currentBody = body;
+        currentFruit = fruit;
 
         //월드에 배치
         World.add(world, body);
@@ -101,27 +104,32 @@ window.onkeydown = (event) =>
     switch(event.code) 
     {
         case "KeyA":
-            Body.setPosition(currentbody, {
-                x: currentbody.position.x -10,
-                y: currentbody.position.y ,
-            })
+            if(currentBody.position.x - currentFruit.radius > 30 ) {
+                Body.setPosition(currentBody, {
+                    x: currentBody.position.x -10,
+                    y: currentBody.position.y ,
+                })
+            }
             break;
 
         case "KeyD":
-            Body.setPosition(currentbody, {
-                x: currentbody.position.x +10,
-                y: currentbody.position.y,
-            })    
+            if(currentBody.position.x + currentFruit.radius < 490 ){
+                Body.setPosition(currentBody, {
+                    x: currentBody.position.x +10,
+                    y: currentBody.position.y,
+                })    
+            }
+            
             break;
         case "Space":
-            currentbody.isSleeping = false;  
+            currentBody.isSleeping = false;  
             // addFruit()
             disableAction = true;
             //지연 시키는 함수
             setTimeout(()=> {
                 addFruits();
                 disableAction = false;
-            }, 1000);
+            }, 500);
             break;         
     }
 }
@@ -157,6 +165,12 @@ Events.on(engine, "collisionStart", (event) => {
             //새로 만든 과일 추가
             World.add(world, newBody);
         
+        }
+
+        //게임 종료 조건 이벤트 생성
+        if( !disableAction && (collision.bodyA.name === "topLine" || collision.bodyB.name === "topLine") ){
+             alert("game over");
+             disableAction == true;
         }
     })
 })
