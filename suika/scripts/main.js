@@ -229,7 +229,7 @@ Events.on(engine, "collisionStart", (event) => {
             World.add(world, newBody);
 
             //게임 승리 조건
-            if(newBody.index === 5){
+            if(newBody.index === 10){
                 
                 setTimeout(() => {
                     alert("wow you did it, mate. you made the watermelon!\nbloody hell. congratulation!");
