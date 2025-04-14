@@ -1,6 +1,48 @@
 // 이미지 및 반지름 추가
 import { FRUITS } from "./fruits.js";
 
+// 1 이미지 미리 불러오는 작업
+const loadTexture = async () => {
+
+    const textureList = [
+    'image/00_cherry.png',
+    'image/01_strawberry.png',
+    'image/02_grape.png',
+    'image/03_gyool.png',
+    'image/04_orange.png',
+    'image/05_apple.png',
+    'image/06_pear.png',
+    'image/07_peach.png',
+    'image/08_pineapple.png',
+    'image/09_melon.png',
+    'image/10_watermelon.png',
+    ]
+    
+    const load = textureUrl => {
+    const reader = new FileReader()
+    
+    return new Promise( resolve => {
+    reader.onloadend = ev => {
+    resolve(ev.target.result)
+    }
+    fetch(textureUrl).then( res => {
+    res.blob().then( blob => {
+    reader.readAsDataURL(blob)
+    })
+    })
+    })
+    }
+    
+    const ret = {}
+    
+    for ( let i = 0; i < textureList.length; i++ ) {
+    ret[textureList[i]] = await load(`${textureList[i]}`)
+    }
+    
+    return ret
+    }
+    
+    const textureMap = await loadTexture()
 
 // 모듈 불러오기
 
@@ -67,6 +109,9 @@ let currentFruit = null;
 //키 조작 제어 변수
 let disableAction = false;
 
+//키 제어 변수
+let interval = null;
+
 //과일 추가 함수
 function addFruits() 
 {
@@ -104,22 +149,30 @@ window.onkeydown = (event) =>
     switch(event.code) 
     {
         case "KeyA":
-            if(currentBody.position.x - currentFruit.radius > 30 ) {
-                Body.setPosition(currentBody, {
-                    x: currentBody.position.x -10,
-                    y: currentBody.position.y ,
-                })
-            }
-            break;
+            // 한번 누르면 계속 작동하는걸 제어하기 위한 if
+            if(interval)
+                return;
 
+            interval = setInterval(() => {
+                if(currentBody.position.x - currentFruit.radius > 30 ) {
+                    Body.setPosition(currentBody, {
+                        x: currentBody.position.x - 1,
+                        y: currentBody.position.y ,
+                    })
+                }
+            }, 5);
+            break;
         case "KeyD":
-            if(currentBody.position.x + currentFruit.radius < 490 ){
-                Body.setPosition(currentBody, {
-                    x: currentBody.position.x +10,
-                    y: currentBody.position.y,
-                })    
-            }
-            
+            if(interval)
+                return;
+                interval = setInterval(() => {
+                    if(currentBody.position.x + currentFruit.radius < 490 ) {
+                        Body.setPosition(currentBody, {
+                            x: currentBody.position.x + 1,
+                            y: currentBody.position.y ,
+                        })
+                    }
+                }, 5);
             break;
         case "Space":
             currentBody.isSleeping = false;  
@@ -131,6 +184,16 @@ window.onkeydown = (event) =>
                 disableAction = false;
             }, 500);
             break;         
+    }
+}
+
+//인터벌 제어
+window.onkeyup = (event) => {
+    switch(event.code) {
+        case "KeyA":
+        case "KeyD":
+            clearInterval(interval);
+            interval = null;
     }
 }
 
@@ -164,6 +227,15 @@ Events.on(engine, "collisionStart", (event) => {
             
             //새로 만든 과일 추가
             World.add(world, newBody);
+
+            //게임 승리 조건
+            if(newBody.index === 5){
+                
+                setTimeout(() => {
+                    alert("wow you did it, mate. you made the watermelon!\nbloody hell. congratulation!");
+                disableAction = true;
+                }, 1000)
+            }
         
         }
 
