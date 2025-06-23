@@ -9,6 +9,14 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 class Sprite {
     constructor( { position, velocity }){
         this.position = position;
+
+        this.width = 50;
+        this.height = 150;
+    }
+
+    draw(){
+        c.fillStyle = "red";
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
 
@@ -21,3 +29,4 @@ const player = new Sprite({
 })
 
 console.log(player);
+player.draw();
